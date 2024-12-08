@@ -1,0 +1,35 @@
+version: '2.2'
+services:
+  postgres-db:
+    image: postgres:latest
+    container_name: postgres-db
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: shopping-cart
+      POSTGRES_USER: shopping-cart
+      POSTGRES_PASSWORD: shopping-cart
+    healthcheck:
+      test: [ 'CMD', 'pg_isready', "-q", "-d", "shopping-cart", "-U", "shopping-cart" ]
+      interval: 5s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
+
+  # this second PostgreSQL is used when running test
+  postgres-db-test:
+    image: postgres:latest
+    container_name: postgres-db_test
+    ports:
+      - 5433:5432
+    environment:
+      POSTGRES_DB: shopping-cart-test
+      POSTGRES_USER: shopping-cart
+      POSTGRES_PASSWORD: shopping-cart
+    healthcheck:
+      test: [ 'CMD', 'pg_isready', "-q", "-d", "shopping-cart-test", "-U", "shopping-cart" ]
+      interval: 5s
+      retries: 5
+      start_period: 5s
+      timeout: 5s
+
