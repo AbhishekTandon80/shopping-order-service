@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Main 2" type="Application" factoryName="Application">
+    <envs>
+      <env name="APP_CONFIG" value="local2.conf" />
+    </envs>
+    <option name="MAIN_CLASS_NAME" value="shopping.cart.Main" />
+    <module name="shopping-cart-service" />
+    <option name="VM_PARAMETERS" value="-DAPP_CONFIG=local2.conf -Djava.library.path=target/lib -Dconfig.resource=local2.conf" />
+    <method v="2">
+      <option name="Make" enabled="true" />
+    </method>
+  </configuration>
+</component>

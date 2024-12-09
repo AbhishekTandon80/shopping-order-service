@@ -30,7 +30,9 @@ public class Main {
   public static void main(String[] args) {
     ActorSystem<Void> system = ActorSystem.create(Behaviors.empty(), "shopping-cart-service");
     try {
-      init(system, orderServiceClient(system));
+      ShoppingOrderService shoppingOrderService = null;
+//      shoppingOrderService = orderServiceClient(system);
+      init(system, shoppingOrderService);
     } catch (Exception e) {
       logger.error("Terminating due to initialization failure.", e);
       system.terminate();
@@ -54,7 +56,7 @@ public class Main {
 
     
     // ...
-    SendOrderProjection.init(system, orderService); 
+    //SendOrderProjection.init(system, orderService);
     // ...
     
 

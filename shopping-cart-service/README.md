@@ -63,3 +63,48 @@
     ```
 
     or same `grpcurl` commands to port 8102 to reach node 2.
+
+
+
+## Running the application on K8s
+
+1. Login into docker.io
+```shell
+docker login -u "abhitandon80" -p 'xxxxx' docker.io
+```
+
+2. Run below maven command to build and push the image into docker.io
+```shell
+mvn -Dversion.number=0.1-SNAPSHOT -DskipTests clean package docker:push
+```
+3. Change namespace for the kubectl
+
+```shell
+kubectl config set-context --current --namespace=shopping-cart-namespace
+```
+
+4. Run below commands for deployment of the application into K8s cluster
+
+```shell
+kubectl get deployment
+kubectl delete deployment shopping-cart-service
+kubectl get pods
+kubectl apply -f kubernetes/namespace.json
+kubectl apply -f kubernetes/rbac.yml
+kubectl apply -f kubernetes/deployment.yml
+
+kubectl get pods
+kubectl describe  pods 
+
+#Secret file to pull docker image
+#kubectl get secret regcred --output="jsonpath={.data.\.dockerconfigjson}" | base64 --decode
+```
+
+
+5. Activate service for access from bash shell
+```shell
+kubectl apply -f kubernetes/service.yml
+kubectl describe  service
+kubectl port-forward svc/shopping-cart-service-svc 8101:8101
+grpcurl -d '{"cartId":"cart1"}' -plaintext 127.0.0.1:8101 shoppingcart.ShoppingCartService.GetCart
+```
